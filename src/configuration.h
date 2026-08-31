@@ -4,7 +4,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////                                            Feature Toggles                                         //////////
 
-#define ENABLE_DEBUG_COMMS    0  // Enable debug communication via USB with Arduino IDE
+#define ENABLE_DEBUG_COMMS    0  // Enable debug communication via USB with Arduino IDE(Slows down Everything. Not needed for normal operation)
 #define ENABLE_LED_FLICKERING 1  // Enable LED Flickering
 #define ENABLE_SOUND          1  // Enable Sound. Disable this if you are not using any speakers.
 
