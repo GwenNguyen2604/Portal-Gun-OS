@@ -5,9 +5,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 //////////                        OBJECTS DEFINITION                          //////////
 
+// Speaker 1 is the ambient/voice channel. Speaker 2 is the short SFX channel.
 Speaker speaker1(PIN_SPEAKER1_RX, PIN_SPEAKER1_TX, VOLUME_PLAYER1, 1);
 Speaker speaker2(PIN_SPEAKER2_RX, PIN_SPEAKER2_TX, VOLUME_PLAYER2, 2);
 
+// DFPlayer modules can ignore or misread commands when they are sent too quickly.
 static constexpr uint16_t DFPLAYER_COMMAND_SETTLE_MS = 200;
 
 
@@ -19,12 +21,14 @@ SetupSpeakers()
 {
     debugPrintln("> Setup Sound... ");
 
+    // Begin serial connection for each speaker.
     speaker1.SoftSerial.begin(9600);
     speaker2.SoftSerial.begin(9600);
 
     bool player1Ready = speaker1.dfPlayer.begin(speaker1.SoftSerial);
     bool player2Ready = speaker2.dfPlayer.begin(speaker2.SoftSerial);
 
+    // The players sometimes miss the first startup handshake, so give each one a retry.
     if (!player1Ready) {
         delay(1000);
         player1Ready = speaker1.dfPlayer.begin(speaker1.SoftSerial);
@@ -56,6 +60,7 @@ SetupSpeakers()
     if (player2Ready) {
         speaker2.dfPlayer.reset();
     }
+    // Reset needs a short settle period before the next playback command.
     if (player1Ready || player2Ready) {
         delay(1000);
     }
@@ -63,6 +68,8 @@ SetupSpeakers()
     if (player1Ready) {
         uint8_t player1Attempts = 0;
         do {
+            // Always send the loop command at least once; checking first can falsely
+            // mark the idle loop as started before the module actually receives it.
             speaker1.dfPlayer.loop(Speaker1SoundFiles::IDLE_AMBIENT);
             delay(150);
             player1Attempts++;
@@ -83,6 +90,7 @@ SetupSpeakers()
     if (player2Ready) {
         uint8_t player2Attempts = 0;
         do {
+            // Player 2 starts with the activation sound and then waits for SFX.
             speaker2.dfPlayer.play(Speaker2SoundFiles::ACTIVATION);
             delay(150);
             player2Attempts++;
@@ -117,6 +125,8 @@ SetupSpeakers()
 void
 HandleSpeakersIdlingStates()
 {
+    // Called every state machine tick. Speaker 1 returns to the ambient loop
+    // after a voice line finishes; speaker 2 simply becomes available for SFX.
     speaker2.UpdateIdlingState();
     speaker1.UpdateIdlingState();
 
@@ -142,6 +152,7 @@ PlayShootingSoundOrange()
 void
 PlayEncoderSelectedSound(EncoderNum encNum)
 {
+    // Rotary positions choose different voice-line groups on speaker 1.
     Speaker1SoundFiles soundFile = Speaker1SoundFiles::IDLE_AMBIENT;
     switch (encNum) {
         case EncoderNum::POS_1:
@@ -187,6 +198,7 @@ PlayEncoderSelectedSound(EncoderNum encNum)
     }
 
     uint32_t soundLength = SoundFile1LengthInMilli[soundLengthIndex];
+    // Stop the ambient loop cleanly before starting a voice line.
     speaker1.StopAndFlush(DFPLAYER_COMMAND_SETTLE_MS, false);
     speaker1.dfPlayer.volume(VOLUME_ENCODER);
     delay(DFPLAYER_COMMAND_SETTLE_MS);
@@ -204,6 +216,7 @@ PlayLowBatterySound()
 {
     static uint32_t lastPlayed = 0;
 
+    // Warn periodically instead of repeating the low-battery sound every battery read.
     if (millis() - lastPlayed >= LOW_BATTERY_WARNING_INTERVAL) {
         speaker2.PlaySound(LOW_BATTERY);
         lastPlayed = millis();
@@ -216,6 +229,7 @@ Speaker::FadeOut(uint16_t durationMs)
 {
     const uint8_t startVolume = volumePlayer;
 
+    // A zero-volume or zero-duration fade is just an immediate stop.
     if (startVolume == 0 || durationMs == 0) {
         dfPlayer.stopRepeat();
         dfPlayer.stopRepeatPlay();
@@ -244,6 +258,8 @@ Speaker::FadeOut(uint16_t durationMs)
 void
 Speaker::StopAndFlush(uint16_t settleMs, bool restoreVolume)
 {
+    // Stop all playback modes because DFPlayer repeat and normal playback have
+    // separate stop commands.
     dfPlayer.stopRepeat();
     dfPlayer.stopRepeatPlay();
     dfPlayer.stop();
@@ -269,6 +285,8 @@ Speaker::StopAndFlush(uint16_t settleMs, bool restoreVolume)
 void
 Speaker::PlaySound(uint8_t soundFile, bool isLooping, uint16_t bufferGapMs)
 {
+    // Keep local state in sync with the command we sent so the main loop knows
+    // whether this speaker should be considered busy or idle.
     if (!isLooping) {
         dfPlayer.play(soundFile);
         if (bufferGapMs > 0) {
@@ -298,6 +316,7 @@ Speaker::UpdateIdlingState()
     if (!isIdle) {
         bool soundFinished = false;
 
+        // Long voice lines use known file durations; short SFX can use DFPlayer status.
         if (playingEndTime > 0) {
             soundFinished = millis() > playingEndTime;
         } else {
