@@ -7,7 +7,7 @@ Full build instructions are still a work in progress as per EVARATE's page; use 
 **You can find all 3D files as well as an assembly [here](https://cad.onshape.com/documents/e9792b9eb487303a96ad3879/w/b553b2e39ecd2aecf96e9de1/e/bdf311fa5cd6293295744bfa?renderMode=0&uiState=67f5a42bb2acff2e70fb3628).**
 
 
-## Added functionalities and changes compared to EVARATE's portal gun
+## Added functionalities and changes
 
 - The rotary encoder now does something useful. Turning it selects a voice-line slot, and pressing it plays the selected Portal-themed voice line. Voicelines played are listed below
     - Rotary position 1 - If pressed, plays radio tune (sound 2)
