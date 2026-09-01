@@ -39,7 +39,7 @@ Full build instructions are still a work in progress as per EVARATE's page; use 
 | Amount | Part Number | Part | Info |
 |---|---|---|---|
 | 1 | 201 | [USB-C Breakout Box ](https://www.adafruit.com/product/4090) |  |
-| 2 | 202 | [PowerBoost 500 Charger](https://www.adafruit.com/product/1944) | Look for adafruit distributors on the site if it's out of stock there. *Use a PowerBoost 1000 Charger if you want faster charging. Works identical and allowes higher current. I might change to it here in the future too.* |
+| 2 | 202 | [PowerBoost 500 Charger](https://www.adafruit.com/product/1944) | *Use a PowerBoost 1000 Charger if you want faster charging. Works identical and allowes higher current.* |
 | 2 | 203 | [3.7V LiPo Battery](https://www.adafruit.com/product/353) | Must be rated for at least 1500mA discharge rate! |
 | 1 | 204 | [Arduino ESP32 Board](https://www.digikey.com/short/pr0z2b77) | Preferrably an ESP32 board. Other 5V boards may work but will need code and pin changes. |
 | 9 | 205 | [WS2812B RGB LED](https://a.co/d/0cML1SAu) |  |
@@ -56,17 +56,17 @@ Full build instructions are still a work in progress as per EVARATE's page; use 
 | 1 | 215.2 | [16mm Momentary Push Button - Red](https://www.digikey.com/short/z4qhvmb8) |  |
 | 1 | 216 | [3PDT ON/ON Toggle Switch](https://a.co/d/02wVgcIb) |  |
 | 1 | 217 | [KY-040 Rotary Module](https://a.co/d/0guLndFy) |  |
-| 1 | 218 | [Colored Wires](https://www.digikey.com/short/b15v0mwf) | Must be rated for at least 1A. Anything similar works here obviously. I use the colors in the instructions later. |
+| 1 | 218 | [Colored Wires](https://www.digikey.com/short/b15v0mwf) | Must be rated for at least 1A. Anything similar works here obviously |
 | 2 | 219.1 | [150Ohm Resistor](https://www.digikey.com/short/dcm10drh) | Resistance needs for the RGB LED |
 | 2 | 219.2 | [4.3kOhm Resistor](https://www.digikey.com/short/5dt18jqm) | Resistance needs for the VN and VP pins connected to the batteries |
 | ~2 | 220.1 | [100uF Capacitors](https://www.digikey.com/short/b3zp4zqb) | Accross power rail |
-| ~5 | 220.2 | [10uF Capacitors](https://www.digikey.com/short/3n3crz35) | accross ESP32 VIN and GND |
-| ~5 | 220.3 | [0.1uF Capacitors](https://www.digikey.com/short/n8mnrvb4) | accross ESP32 VIN and GND, for the DFPlayers |
-| 2 | 220.4 | [1mF Capacitors]() | for the DFPlayers |
+| ~5 | 220.2 | [10uF Capacitors](https://www.digikey.com/short/3n3crz35) | Accross ESP32 VIN and GND |
+| ~5 | 220.3 | [0.1uF Capacitors](https://www.digikey.com/short/n8mnrvb4) | Accross ESP32 VIN and GND, for the DFPlayers |
+| 2 | 220.4 | [1mF Capacitors]() | For the DFPlayers |
 | 2 | 221 | [PCB Solder Board](https://www.digikey.com/short/vf18zdq0) |  |
 
 ### Other Parts
-Consult EVARATE's part list [here](https://www.thingiverse.com/thing:6191828).
+Consult EVARATE's part list [here](https://www.thingiverse.com/thing:6191828). I found V3 to have a similar part list as V2, albeit with more screws needed. The number of screws can be examined in the [model file here](https://cad.onshape.com/documents/e9792b9eb487303a96ad3879/w/b553b2e39ecd2aecf96e9de1/e/bdf311fa5cd6293295744bfa?renderMode=0&uiState=67f5a42bb2acff2e70fb3628).
 
 
 ## Current status
