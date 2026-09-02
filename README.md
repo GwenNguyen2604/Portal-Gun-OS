@@ -9,17 +9,18 @@ Full build instructions are still a work in progress as per EVARATE's page; use 
 
 ## Added functionalities and changes
 
-- The rotary encoder now does something useful. Turning it selects a voice-line slot, and pressing it plays the selected Portal-themed voice line. Voicelines played are listed below
-    - Rotary position 1 - If pressed, plays radio tune (sound 2)
-    - Rotary position 2 - If pressed, plays either Cave's or GLaDOS's welcome (sound 3-4)
-    - Rotary position 3 - If pressed, plays one of the 2 GLaDOS's cake lines (sound 9-10)
-    - Rotary position 4 - If pressed, plays Cave's abestos line (sound 5)
-    - Rotary position 5 - If pressed, plays a radom turret greeting (sound 12-15)
-    - Rotary position 6 - If pressed, plays GLaDOS's Weight line (sound 11)
-    - Rotary position 7 - If pressed, plays Cave's Mantis line (sound 7)
-    - Rotary position 8 - If pressed, plays GLaDOS's bird line (sound 8)
-    - Rotary position 9 - If pressed, plays Cave's Lemon rant (sound 6)
-    - Rotary position 10 - If pressed, plays a radom turret greeting (sound 12-15) (same as POS_5)
+- The rotary encoder now does something. Turning it selects a voiceline slot, and pressing it plays the selected Portal themed voiceline. The following voicelines are available to be played in order of the rotary's position:
+    | Position | Voice line | Sound number(s)|
+    | --- | --- | --- |
+    | 1 | Radio tune | 2 |
+    | 2 | Cave or GLaDOS welcome | 3,4 |
+    | 3 | One of GLaDOS cake lines | 9,10 |
+    | 4 | Cave asbestos line | 5 |
+    | 5, 10 | Random turret greeting | 12-15 |
+    | 6 | GLaDOS weight line | 11 |
+    | 7 | Cave mantis line | 7 |
+    | 8 | GLaDOS bird line | 8 |
+    | 9 | Cave lemon rant | 6 |
 
 - Speaker1 now handles the constant ambient hum and voice lines. Speaker2 still handles shooting, startup, and warning sounds.
 - The ambient hum comes back automatically after a voice line finishes.
@@ -33,6 +34,7 @@ Full build instructions are still a work in progress as per EVARATE's page; use 
 ## Part list for V3
 
 - The part list is similar to that of V2, with some changes. Below is the list of parts that I used to assemble the Portal Gun, plus where to find them
+
 
 ### Electronics Parts
 
@@ -65,8 +67,13 @@ Full build instructions are still a work in progress as per EVARATE's page; use 
 | 2 | 220.4 | [1mF Capacitors]() | For the DFPlayers |
 | 2 | 221 | [PCB Solder Board](https://www.digikey.com/short/vf18zdq0) |  |
 
+
 ### Other Parts
 Consult EVARATE's part list [here](https://www.thingiverse.com/thing:6191828). I found V3 to have a similar part list as V2, albeit with more screws needed. The number of screws can be examined in the [model file here](https://cad.onshape.com/documents/e9792b9eb487303a96ad3879/w/b553b2e39ecd2aecf96e9de1/e/bdf311fa5cd6293295744bfa?renderMode=0&uiState=67f5a42bb2acff2e70fb3628).
+
+
+## Assembly
+Refer to the circuit diagram and EVARATE's assembly instruction [here](https://github.com/EVARATE/Portal-Gun-OS).
 
 
 ## Current status
@@ -74,6 +81,6 @@ Consult EVARATE's part list [here](https://www.thingiverse.com/thing:6191828). I
 This version has been tested on the physical Portal Gun. Shooting sounds, rotary-selected voice lines, and ambient-loop recovery are currently working.
 
 
-## Known Issue
+### Known Issue
 - Sometimes the voiceline may not play after clicking.
 - Due to the short elapse time of the Turret voiceline, playing it can make it loop nonstop at times. Fix this by playing another voiceline or rebooting.
